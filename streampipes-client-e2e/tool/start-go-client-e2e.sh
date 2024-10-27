@@ -33,6 +33,12 @@ loginRequestBody='{
   "password": "'"$SP_PASSWORD"'"
 }'
 
+if nc -zv localhost 8030; then
+    echo "Port 8030 is open and listening."
+else
+    echo "Port 8030 is not open or not listening."
+    exit 1
+fi
 # Login and get accessToken
 response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
    -H "Content-Type: application/json" \
