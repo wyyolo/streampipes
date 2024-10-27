@@ -43,7 +43,7 @@ fi
 echo "http://$HOST:$PORT$LOGIN_URL"
 echo "$loginRequestBody"
 # Login and get accessToken
-max_attempts=10
+max_attempts=60
 attempt=1
 while [ $attempt -le $max_attempts ]
 do
