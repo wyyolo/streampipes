@@ -62,6 +62,9 @@ jobs:
       - name: Check if streampipes services are running
         run: docker ps
 
+      - name: logs streampipes_backend
+        run: docker logs streampipes_backend
+
       - name: Start go client test
         run: |
           chmod +x ./streampipes-client-e2e/tool/start-go-client-e2e.sh
