@@ -33,40 +33,16 @@ loginRequestBody='{
   "password": "'"$SP_PASSWORD"'"
 }'
 
-# Login and get accessToken
-#response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
-#   -H "Content-Type: application/json" \
-#   -d "$loginRequestBody")
-#if [ $? -ne 0 ]; then
-#    echo "Error: Login request failed"
-#    exit 1
-#fi
+docker-compose ps
 
 # Login and get accessToken
-curl_output="curl_output.txt"
-curl_error="curl_error.txt"
-
-response=$(curl -s -o "$curl_output" -e "$curl_error" -w "%{http_code}" -X POST "http://$HOST:$PORT$LOGIN_URL" \
+response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
    -H "Content-Type: application/json" \
-   -d "$loginRequestBody" 2> "$curl_error")
-
+   -d "$loginRequestBody")
 if [ $? -ne 0 ]; then
     echo "Error: Login request failed"
-    # Print the error details from curl_error
-    echo "Error details:"
-    cat "$curl_error"
     exit 1
-else
-    echo "Login request successful"
-    # Print the response details from curl_output
-    echo "Response details:"
-    cat "$curl_output"
-    # You can also print the HTTP status code
-    echo "HTTP Status Code: $response"
 fi
-
-# Remove the temporary files if not needed anymore
-rm "$curl_output" "$curl_error"
 
 accessToken=$(echo "$response" | sed -n 's/.*"accessToken":"\([^"]*\)".*/\1/p')
 
