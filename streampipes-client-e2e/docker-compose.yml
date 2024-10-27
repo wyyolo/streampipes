@@ -33,9 +33,6 @@ services:
   #### apache/streampipes
   backend:
     container_name: streampipes_backend
-    build:
-      context: ../streampipes-service-core
-      dockerfile: Dockerfile
     image: streampipes_backend:release-validation
     ports:
       - "8030:8030"
@@ -49,9 +46,6 @@ services:
       spnet:
 
   extensions-all-jvm:
-    build:
-      context: ../streampipes-extensions/streampipes-extensions-all-jvm
-      dockerfile: Dockerfile
     image: streampipes_pipeline-elements-all-jvm:release-validation
     volumes:
       - files:/spImages
