@@ -16,7 +16,7 @@
 # limitations under the License.
 
 # Set environment variables
-HOST="localhost"
+HOST="127.0.0.1"
 PORT="8030"
 LOGIN_URL="/streampipes-backend/api/v2/auth/login"
 
@@ -39,6 +39,9 @@ else
     echo "Port 8030 is not open or not listening."
     exit 1
 fi
+
+echo "http://$HOST:$PORT$LOGIN_URL"
+echo "$loginRequestBody"
 # Login and get accessToken
 response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
    -H "Content-Type: application/json" \
