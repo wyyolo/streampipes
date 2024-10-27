@@ -71,7 +71,7 @@ jobs:
       - name: Start go client test
         run: |
           chmod +x ./streampipes-client-e2e/tool/start-go-client-e2e.sh
-          ./streampipes-client-e2e/tool/start-go-client-e2e.sh
+          ./streampipes-client-e2e/tool/start-go-client-e2e.sh -go_client_e2e_dir streampipes-client-e2e/go-client-e2e
 
       - name: logs
         run: docker logs streampipes_backend

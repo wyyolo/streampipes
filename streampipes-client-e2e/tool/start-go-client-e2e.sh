@@ -16,6 +16,7 @@
 # limitations under the License.
 
 # Set environment variables
+GO_CLIENT_E2E_DIR="../go-client-e2e"
 HOST="127.0.0.1"
 PORT="8030"
 LOGIN_URL="/streampipes-backend/api/v2/auth/login"
@@ -32,6 +33,10 @@ loginRequestBody='{
   "username": "'"$SP_USERNAME"'",
   "password": "'"$SP_PASSWORD"'"
 }'
+
+if [ "$#" -gt 1 ] && [ "$1" == "-go_client_e2e_dir" ]; then
+    GO_CLIENT_E2E_DIR="$2"
+fi
 
 if nc -zv localhost 8030; then
     echo "Port 8030 is open and listening."
@@ -128,7 +133,7 @@ curl -s -X POST "http://$HOST:$PORT$INSTALL_ELEMENT_URL" \
    -H "authorization: Bearer $accessToken" \
    -d "$installRequestBody"
 
-cd ../go-client-e2e || exit
+cd "$GO_CLIENT_E2E_DIR" || exit
 go test -v ../go-client-e2e/... -args "$HOST" "$PORT" "$APIKEY" "$API_KEY_USER_NAME"
 if [ $? -ne 0 ]; then
     echo "Error: go test failed"
