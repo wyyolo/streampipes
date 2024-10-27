@@ -33,13 +33,12 @@ loginRequestBody='{
   "password": "'"$SP_PASSWORD"'"
 }'
 
-docker-compose ps
-
 # Login and get accessToken
 response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
    -H "Content-Type: application/json" \
    -d "$loginRequestBody")
 if [ $? -ne 0 ]; then
+    echo "$response"
     echo "Error: Login request failed"
     exit 1
 fi
