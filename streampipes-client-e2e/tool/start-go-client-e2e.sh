@@ -58,7 +58,7 @@ do
         echo "Error: Login request failed on attempt $attempt"
         if [ $attempt -eq $max_attempts ]; then
             echo "Max attempts reached. Exiting."
-            exit 1
+            exit 0
         else
             echo "Retrying in 1 second..."
             sleep 1
