@@ -43,14 +43,29 @@ fi
 echo "http://$HOST:$PORT$LOGIN_URL"
 echo "$loginRequestBody"
 # Login and get accessToken
-response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
-   -H "Content-Type: application/json" \
-   -d "$loginRequestBody")
-if [ $? -ne 0 ]; then
-    echo "$response"
-    echo "Error: Login request failed"
-    exit 0
-fi
+max_attempts=10
+attempt=1
+while [ $attempt -le $max_attempts ]
+do
+    response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
+        -H "Content-Type: application/json" \
+        -d "$loginRequestBody")
+    if [ $? -eq 0 ]; then
+        echo "Login successful: $response"
+        break
+    else
+        echo "$response"
+        echo "Error: Login request failed on attempt $attempt"
+        if [ $attempt -eq $max_attempts ]; then
+            echo "Max attempts reached. Exiting."
+            exit 1
+        else
+            echo "Retrying in 1 second..."
+            sleep 1
+        fi
+    fi
+    attempt=$((attempt+1))
+done
 
 accessToken=$(echo "$response" | sed -n 's/.*"accessToken":"\([^"]*\)".*/\1/p')
 
