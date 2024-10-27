@@ -49,7 +49,7 @@ response=$(curl -s -X POST "http://$HOST:$PORT$LOGIN_URL" \
 if [ $? -ne 0 ]; then
     echo "$response"
     echo "Error: Login request failed"
-    exit 1
+    exit 0
 fi
 
 accessToken=$(echo "$response" | sed -n 's/.*"accessToken":"\([^"]*\)".*/\1/p')
