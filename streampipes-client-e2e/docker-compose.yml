@@ -32,6 +32,7 @@ x-logging: &default-logging
 services:
   #### apache/streampipes
   backend:
+    container_name: streampipes_backend
     build:
       context: ../streampipes-service-core
       dockerfile: Dockerfile
